@@ -7,6 +7,7 @@ var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
 var commentsRouter = require('./routes/comments');
 var indexRouter = require('./routes/index');
+const expressLayouts = require('express-ejs-layouts');
 
 
 
@@ -18,11 +19,16 @@ app.use(session({
     saveUninitialized: false
 }));
 
+// Set the view engine to ejs
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(expressLayouts);
+
 
 
 

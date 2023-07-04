@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title><%= post.title %></title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
+<% title = 'Travels with Tess' %>
   <div class="container">
     <h1><%= post.title %></h1>
-    <p>Posted by <%= post.User.username %></p>
     <p><%= post.content %></p>
+    <!-- Display the comments for this post -->
+    <% post.Comments.forEach(comment => { %>
+      <p><%= comment.content %></p>
+    <% }) %> 
 
     <h2>Comments</h2>
     <% post.Comments.forEach(function(comment) { %>
@@ -29,5 +26,4 @@
       <button type="submit" class="btn btn-primary">Comment</button>
     </form>
   </div>
-</body>
-</html>
+
