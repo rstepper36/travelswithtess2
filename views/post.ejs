@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= post.title %></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1><%= post.title %></h1>
+    <p>Posted by <%= post.User.username %></p>
+    <p><%= post.content %></p>
+
+    <h2>Comments</h2>
+    <% post.Comments.forEach(function(comment) { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= comment.User.username %></h5>
+          <p class="card-text"><%= comment.content %></p>
+        </div>
+      </div>
+    <% }) %>
+
+    <h2>Add Comment</h2>
+    <form action="/create" method="post">
+      <input type="hidden" name="postId" value="<%= post.id %>">
+      <div class="form-group">
+        <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
+  </div>
+</body>
+</html>
