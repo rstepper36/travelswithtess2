@@ -18,7 +18,7 @@
     <% }) %>
 
     <h2>Add Comment</h2>
-    <form action="/create" method="post">
+    <form action="/comments/create" method="post">
       <input type="hidden" name="postId" value="<%= post.id %>">
       <div class="form-group">
         <textarea class="form-control" id="content" name="content" rows="3" required></textarea>

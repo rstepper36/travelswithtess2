@@ -3,20 +3,20 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const models = require('../models');
 
-router.get('/register', (req, res) => {
+router.get('/users/register', (req, res) => {
     res.render('register');
   });
   
 // User registration route
-router.post('/register', (req, res) => {
+router.post('/users/register', (req, res) => {
   const { username, password } = req.body;
   bcrypt.hash(password, 10, function(err, hash) {
     models.User.create({
       username: username,
       password: hash,
-      canPost: true  // you can set this to false if you want to manually control who can post
+      canPost: false // you can set this to false if you want to manually control who can post
     }).then(user => {
-      res.redirect('/login');
+      res.redirect('/users/login');
     });
   });
 });
@@ -46,6 +46,15 @@ router.post('/login', (req, res) => {
       }
     });
   });
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      if(err) {
+        console.log(err);
+      }
+      res.redirect('/');
+    });
 });
 
 module.exports = router;

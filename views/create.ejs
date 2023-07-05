@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Create Post</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
+<% title = 'Travels with Tess' %>
   <div class="container">
     <h1>Create Post</h1>
-    <form action="/create" method="post">
+    <% if (typeof error !== 'undefined') { %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="/posts/create" method="post">
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" id="title" name="title" required>
@@ -18,6 +18,4 @@
       </div>
       <button type="submit" class="btn btn-primary">Create</button>
     </form>
-  </div>
-</body>
-</html>
+ 

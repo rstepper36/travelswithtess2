@@ -3,9 +3,9 @@ const router = express.Router();
 const models = require('../models');
 
 // Route for creating a new comment
-router.post('/create', (req, res) => {
+router.post('/comments/create', (req, res) => {
   if (!req.session.user) {
-    res.redirect('/login');
+    res.redirect('/users/login');
   }
 
   const { postId, content } = req.body;
@@ -14,7 +14,7 @@ router.post('/create', (req, res) => {
     PostId: postId,
     UserId: req.session.user.id
   }).then(comment => {
-    res.redirect('/posts/' + postId);
+    res.redirect('/posts/posts/' + postId);
   });
 });
 
