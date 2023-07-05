@@ -22,7 +22,6 @@ travelswithtess2
 -node_modules
 -public
 --css
---js
 -views
 --register.ejs
 --login.ejs
