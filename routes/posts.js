@@ -45,12 +45,13 @@ router.post('/create', (req, res) => {
       content: content,
       UserId: req.session.user.id
     })
-    .then(post => {
+    .then(post => {å
       res.redirect('/posts/' + post.id);
     })
     .catch(err => {
-      console.log(err);
-      res.redirect('/create');
+       // Instead of just logging the error, also render the error view.
+        // console.log(err);
+        res.render('error', { error: err });
     });
   });
 
@@ -76,11 +77,14 @@ router.get('/:id', (req, res) => {
       if (!post) {
         return res.status(404).send('Post not found');
       }
-
       res.render('post', {
         post: post
       });
-    }).catch(err => console.log(err));
+    }).catch(err => {
+        // Instead of just logging the error, also render the error view.
+         // console.log(err);
+         res.render('error', { error: err });
+     });
   });
 
 module.exports = router;

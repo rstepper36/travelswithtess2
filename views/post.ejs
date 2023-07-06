@@ -11,8 +11,10 @@
     <% post.Comments.forEach(function(comment) { %>
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title"><%= comment.User.username %></h5>
-          <p class="card-text"><%= comment.content %></p>
+            <p class="card-text mb-2"><%= comment.content %></p>
+            <h5 class="card-title text-sm"><%= comment.User ? comment.User.username : 'Anonymous' %></h5>
+            <h6 class="card-subtitle mb-2 text-muted text-sm"><%= comment.createdAt %></h6>
+          
         </div>
       </div>
     <% }) %>
