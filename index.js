@@ -44,7 +44,7 @@ app.use('/comments', commentsRouter); // instead of app.use('/comments', comment
 app.use('/', indexRouter); // instead of app.use('/', indexRoutes);
 
 // Sync the database and start listening
-models.sequelize.sync().then(() => {
+models.sequelize.sync({ alter: true }).then(() => {
   app.listen(3000, () => {
     console.log('App listening on port 3000!');
   });
