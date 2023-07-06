@@ -1,13 +1,14 @@
 <% title = 'Travels with Tess' %>
 <div class="container">
+    <h3>Please click on the title to add comments to any post</h3>
   <% if (typeof message !== 'undefined') { %>
     <h2><%= message %></h2>
   <% } else { %>
     <% posts.forEach(post => { %>
-      <h1><%= post.title %></h1>
-      <p>Posted by <%= post.User.username %></p>
-      <p><%= post.content %></p>
-      <hr>
-    <% }) %>
+        <h1><a href="/posts/<%= post.id %>" data-bs-toggle="tooltip" title="Click on title to add comment" ><%= post.title %></a></h1>
+        <p>Posted by <%= post.User.username %></p>
+        <p><%= post.content %></p>
+        <hr>
+    <% }) %>      
   <% } %>
 </div>

@@ -3,19 +3,28 @@ const router = express.Router();
 const models = require('../models');
 
 // Route for creating a new comment
-router.post('/comments/create', (req, res) => {
-  if (!req.session.user) {
-    res.redirect('/users/login');
-  }
-
-  const { postId, content } = req.body;
-  models.Comment.create({
-    content: content,
-    PostId: postId,
-    UserId: req.session.user.id
-  }).then(comment => {
-    res.redirect('/posts/posts/' + postId);
+router.post('/create', (req, res) => {
+    const { postId, content } = req.body;
+    
+    let commentData = {
+      content: content,
+      PostId: postId
+    };
+    
+    if (req.session.user) {
+      commentData.UserId = req.session.user.id;
+    }
+  
+    models.Comment.create(commentData)
+    .then(comment => {
+      res.redirect('/posts/' + postId);
+      })
+      .catch(err => {
+          // Instead of just logging the error, also render the error view.
+          // console.log(err);
+          res.render('error', { error: err });
+      });
   });
-});
+  
 
 module.exports = router;
