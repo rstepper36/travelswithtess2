@@ -2,19 +2,25 @@
 
 /* Global styles */
 * {
-  box-sizing: border-box;
   color: aliceblue;
   text-shadow: -2px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
 .navbar{
 position: sticky;
-margin-bottom: 5px;
 background: rgba(0, 0, 0, 0.55);
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(4.6px);
 -webkit-backdrop-filter: blur(4.6px);
 color: #fff;
+align-items: center;
+text-align: center;
+height: 70px;
+margin-top: 10px;
+}
+.navbar-nav {
+text-align: center;
+margin-top: 10px;
 }
 
 .nav-link {
@@ -96,7 +102,7 @@ main {
   min-height: 100vh;
 }
 
-img {
+ figure img{
   box-shadow:   -30px 50px 15px rgba(0, 0, 0, 0.3);
 }
 
