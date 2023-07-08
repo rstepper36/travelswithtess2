@@ -38,8 +38,6 @@ margin-top: 10px;
   border-width: 5px;
 }
 
-
-
 body {
   display: flex;
   flex-direction: column;
@@ -62,7 +60,7 @@ h2,
 h3 {
   margin: 0.1em;
   padding: 0.1em;
-  color: #66d;
+  color: rgb(23, 106, 248);
 }
 
 header {
@@ -99,7 +97,7 @@ main {
 }
 
 .container {
-  min-height: 100vh;
+  min-height: 80vh;
 }
 
  figure img{
