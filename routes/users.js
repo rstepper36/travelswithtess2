@@ -8,7 +8,7 @@ router.get('/users/register', (req, res) => {
   });
   
 // User registration route
-router.post('/users/register', (req, res) => {
+router.post('/register', (req, res) => {
   const { username, password } = req.body;
   bcrypt.hash(password, 10, function(err, hash) {
     models.User.create({
@@ -16,7 +16,7 @@ router.post('/users/register', (req, res) => {
       password: hash,
       canPost: false // you can set this to false if you want to manually control who can post
     }).then(user => {
-      res.redirect('/users/login');
+      res.redirect('/login');
     });
   });
 });
