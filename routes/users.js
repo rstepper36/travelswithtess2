@@ -32,7 +32,7 @@ router.post('/register', (req, res, next) => {
       });
   })
   .then(user => {
-      res.redirect('/login');
+      res.redirect('/users/login');
   })
   .catch(err => {
       next(err);
