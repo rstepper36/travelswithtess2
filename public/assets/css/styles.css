@@ -40,7 +40,7 @@ color: red;
 }
 
 .nav-link:visited {
-  color: red;
+  color: #C0C0C0;
 }
 .navbar-brand:active img {
   content: url("/assets/images/red-logo.png");
@@ -191,10 +191,20 @@ fieldset {
   padding: 5px;
 }
 
-a {
-  text-decoration: none;
+.card-body h2 {
+color: black;
+text-shadow: -1px 2px 6px rgba(0, 0, 0, 0.5);
 }
 
+.card-body h6 {
+color: grey;
+text-shadow: -1px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.card-body h7 {
+  color: grey;
+  text-shadow: -1px 2px 6px rgba(0, 0, 0, 0.5);
+}
 /* Specific styles for each page */
 
 /* About Page */
