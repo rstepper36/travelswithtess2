@@ -19,6 +19,7 @@ lib64/
 node_modules/
 parts/
 sdist/
+uploads/
 var/
 wheels/
 share/python-wheels/

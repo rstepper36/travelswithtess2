@@ -1,18 +1,21 @@
-const express = require('express');
-const router = express.Router();
-const models = require('../models');
+// export a function that takes upload as a parameter
+module.exports = (upload) => {
+  const express = require('express');
+  const router = express.Router();
+  const models = require('../models');
 
-// Route for creating a new post
-router.get('/create', (req, res) => {
-    if (!req.session.user || !req.session.user.canPost) {
-      return res.redirect('/login');
+  router.get('/create', (req, res) => {
+    if (!req.session.user) {
+      return res.redirect('/users/login');
     }
-  
-    res.render('create');
+    if (!req.session.user.canPost) {
+      return res.render('no-perms'); // render noPermission view
+    }
+    res.render('create'); // render create view
   });
+  
 
-// Route for getting all posts
-router.get('/', (req, res) => {
+  router.get('/', (req, res) => {
     models.Post.findAll({
         include: [{
             model: models.Comment,
@@ -21,53 +24,51 @@ router.get('/', (req, res) => {
     })
     .then(posts => {
         if (posts.length === 0) {
-            // If there are no posts, render a "no posts" page or similar
-            return res.render('no-posts');
+            return res.render('no-posts'); // no posts render no-posts view
         }
-        // If there are posts, render the posts page
-        res.render('posts', { 
-            posts: posts 
-        });
+        res.render('posts', { posts: posts }); // render posts view
     })
-    .catch(err => console.log(err));
-});
+    .catch(err => {
+      next(err);
+    });
+  });
 
-
-router.post('/create', (req, res) => {
+  router.post('/create', upload.single('imageURL'), (req, res, next) => {
     if (!req.session.user || !req.session.user.canPost) {
-      return res.redirect('/login');
+      return res.redirect('/users/login');
     }
 
     const { title, content } = req.body;
+    // if there is a file, set imageURL to the filename, otherwise set to null
+    const imageURL = req.file ? 'assets/images/uploads/' + req.file.filename : null; 
 
     models.Post.create({
       title: title,
       content: content,
-      UserId: req.session.user.id
+      UserId: req.session.user.id,
+      imageURL: imageURL // set imageURL to the filename or null
     })
-    .then(post => {å
+    .then(post => {
       res.redirect('/posts/' + post.id);
     })
     .catch(err => {
-       // Instead of just logging the error, also render the error view.
-        // console.log(err);
-        res.render('error', { error: err });
-    });
+      next(err);
   });
+});
 
-router.post('/:id', (req, res) => {
+
+  router.post('/:id', (req, res) => {
     const { content } = req.body;
     models.Comment.create({
       content: content,
       PostId: req.params.id,
       UserId: req.session.user.id
     }).then(comment => {
-      res.redirect('/posts' + req.params.id);
+      res.redirect('/posts/' + req.params.id);
     });
   });
 
-// Route for getting a single post
-router.get('/:id', (req, res) => {
+  router.get('/:id', (req, res) => {
     models.Post.findByPk(req.params.id, {
       include: [{
         model: models.Comment,
@@ -77,14 +78,13 @@ router.get('/:id', (req, res) => {
       if (!post) {
         return res.status(404).send('Post not found');
       }
-      res.render('post', {
-        post: post
-      });
+      res.render('post', { post: post });
     }).catch(err => {
-        // Instead of just logging the error, also render the error view.
-         // console.log(err);
-         res.render('error', { error: err });
-     });
+      next(err);
+    });
   });
 
-module.exports = router;
+  return router;
+};
+// Path: routes/posts.js
+// router file for posts

@@ -6,13 +6,18 @@
     <title><%= title %></title>
     <!-- include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="/css/styles.css">
+    <link type="text/css" rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Travels with Tess</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
+    <nav class="navbar navbar-expand-lg m-0 fixed-top">
+        <a class="navbar-brand" href="/">
+            <img src="/assets/images/white-logo.png" height="40px" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/posts">Posts</a>
                 </li>
@@ -38,10 +43,10 @@
         </div>
     </nav>
     <div class="container">
-        <%- body %>
-    <footer class="text-center">@2023 Nathan Stepper All Rights Reserved</footer>
+            <%- body %>
+        <footer class="text-center mb-0 mt-5" >&copy;2023 Nathan Stepper All Rights Reserved</footer>
     </div>
     <!-- include Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
