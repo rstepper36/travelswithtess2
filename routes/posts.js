@@ -9,7 +9,7 @@ module.exports = (upload) => {
       return res.redirect('/users/login');
     }
     if (!req.session.user.canPost) {
-      return res.render('no-perms'); // render noPermission view
+      return res.render('no-perms'); // render no-perms view
     }
     res.render('create'); // render create view
   });

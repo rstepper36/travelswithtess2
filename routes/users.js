@@ -46,27 +46,32 @@ router.get('/login', (req, res) => {
   });
   
 // User login route
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
   models.User.findOne({
     where: {
       username: username
     }
   }).then(user => {
-    if (!user) res.redirect('/login'); // user not found
+    if (!user) return res.render('no-user'); // render no-user view user not found
 
     bcrypt.compare(password, user.password, function(err, result) {
+      if (err) return next(err);
+      
       if (result) {
         // password matches, log user in
         req.session.user = user;
         res.redirect('/');
       } else {
         // password does not match
-        res.redirect('/login');
+        res.redirect('/users/login');
       }
     });
+  }).catch(err => {
+    next(err); // pass the error to the error-handling middleware
   });
 });
+
 
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
