@@ -6,28 +6,42 @@
   text-shadow: -5px 6px 7px rgba(0, 0, 0, 0.5);
 }
 
-.navbar{
+.navbar {
 position: sticky;
 background: rgba(0, 0, 0, 0.55);
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(4.6px);
--webkit-backdrop-filter: blur(4.6px);
-color: #fff;
+backdrop-filter: blur(3.6px);
+-webkit-backdrop-filter: blur(3.6px);;
 align-items: center;
 text-align: center;
 height: 70px;
 margin-top: 10px;
+color: aliceblue;
 }
 .navbar-nav {
 text-align: center;
 margin-top: 10px;
+color: red;
 }
 
 .nav-link {
-  color: #fff;
   margin: 5px;
   padding: 5px;
+  color: aliceblue;
 }
+
+.nav-link:hover {
+  color: red;
+}
+
+.nav-link:active {
+  color: red;
+}
+
+.navbar-brand:active img {
+  content: url("/assets/images/red-logo.png");
+}
+
 
 .navbar-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(222, 0, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
@@ -60,7 +74,7 @@ h2,
 h3 {
   margin: 0.1em;
   padding: 0.1em;
-  color: rgb(77, 132, 228);
+  color: #C0C0C0; 
 }
 
 
@@ -80,21 +94,38 @@ main {
 }
 
 .btn {
-  background: rgba(248, 44, 166, 0.17);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4.6px);
-  -webkit-backdrop-filter: blur(4.6px);
-  border-radius: 10px;
-  color: #fff;
-  padding: 20px;
-  margin: 10px;
-  border: none;
+  align-items: center;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: black;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: all 0.2s ease-in-out; 
+  transition: box-shadow .15s,transform .15s;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.btn:focus {
+box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+background-color: #FCFCFD;
+color: black;
+}
+
+.btn:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+  background-color: #FCFCFD;
+  color: black;
+}
+
+.btn:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+  background-color: #FCFCFD;
+  color: black;
 }
 
 .container {
@@ -112,7 +143,7 @@ footer {
   backdrop-filter: blur(9.6px);
   -webkit-backdrop-filter: blur(9.6px);
   border-radius: 100px;
-  color: #f0fa;
+  color: #C0C0C0;
   padding: 20px;
   text-align: center;
   margin-top: auto;
@@ -122,7 +153,6 @@ footer {
 
 form label{
   margin: 10px;
-  color: #fff;
 }
 
 fieldset {
@@ -138,11 +168,19 @@ fieldset {
   -webkit-backdrop-filter: blur(11px);
 }
 
-fieldset legend {
-  color: #fff;
+
+
+.TextBox {
+  padding: 10px;
+  margin: 10px;
+  background: rgba(255, 255, 255, 0.17);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
+
 .navbar-brand {
-  color: #66d;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 5px;
   padding: 5px;
@@ -151,7 +189,6 @@ fieldset legend {
 a {
   text-decoration: none;
 }
-
 
 /* Specific styles for each page */
 
@@ -189,7 +226,6 @@ a {
 }
 
 .recipe-item a {
-  color: #333;
   text-decoration: underline;
 }
 
