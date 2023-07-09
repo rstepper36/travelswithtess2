@@ -3,23 +3,43 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const models = require('../models');
 
-router.get('/users/register', (req, res) => {
+router.get('/register', (req, res) => {
     res.render('register');
   });
   
 // User registration route
-router.post('/register', (req, res) => {
+router.post('/register', (req, res, next) => {
   const { username, password } = req.body;
-  bcrypt.hash(password, 10, function(err, hash) {
-    models.User.create({
-      username: username,
-      password: hash,
-      canPost: false // you can set this to false if you want to manually control who can post
-    }).then(user => {
+
+  // Check if the username is already taken
+  models.User.findOne({ where: { username: username }})
+  .then(user => {
+      if(user) {
+          // User already exists
+          let error = new Error('User already exists');
+          error.status = 400;
+          throw error;
+      } else {
+          // Hash the password before saving it to the database
+          return bcrypt.hash(password, 10);
+      }
+  })
+  .then(hash => {
+      return models.User.create({
+          username: username,
+          password: hash,
+          canPost: false // You can set this to false if you want to manually control who can post
+      });
+  })
+  .then(user => {
       res.redirect('/login');
-    });
+  })
+  .catch(err => {
+      next(err);
   });
 });
+
+
 
 router.get('/login', (req, res) => {
     res.render('login');
@@ -33,7 +53,7 @@ router.post('/login', (req, res) => {
       username: username
     }
   }).then(user => {
-    if (!user) res.redirect('/login');
+    if (!user) res.redirect('/login'); // user not found
 
     bcrypt.compare(password, user.password, function(err, result) {
       if (result) {

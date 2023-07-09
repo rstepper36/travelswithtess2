@@ -20,10 +20,8 @@ router.post('/create', (req, res) => {
       res.redirect('/posts/' + postId);
       })
       .catch(err => {
-          // Instead of just logging the error, also render the error view.
-          // console.log(err);
-          res.render('error', { error: err });
-      });
+        next(err);
+    });
   });
   
 

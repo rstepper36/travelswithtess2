@@ -22,10 +22,9 @@ const storage = multer.diskStorage({
   filename: function(req, file, cb) {
     let fileName = new Date().toISOString().replace(/:/g, '-') + path.extname(file.originalname);
     cb(null, fileName);
-    // Save only the relative part in the DB
-    req.body.imageURL = 'assets/images/uploads/' + fileName;
   }
 });
+
 
 
 const upload = multer({storage: storage});
@@ -63,8 +62,16 @@ app.use('/posts', postsRouter); // instead of app.use('/posts', postsRoutes);
 app.use('/comments', commentsRouter); // instead of app.use('/comments', commentsRoutes);
 app.use('/', indexRouter); // instead of app.use('/', indexRoutes);
 
+// Error handling middleware
+app.use(function (err, req, res, next) {
+  console.error(err.stack); // log the error stack to your server's console
+  res.status(err.status || 500);
+  res.render('error', { message: err.message }); // render your error view with the error object
+});
+
+
 // Route for uploading an image
-app.post('/upload', upload.single('image'), async (req, res, next) => {
+app.post('/upload', upload.single('imageURl'), async (req, res, next) => {
   try {
     const image = await Image.create({ path: req.file.path });
     res.status(200).json(image);
@@ -79,3 +86,6 @@ models.sequelize.sync({ alter: true }).then(() => {
     console.log('App listening on port 3000!');
   });
 });
+
+// Path: index.js
+// Entry point for the application

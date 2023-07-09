@@ -5,11 +5,15 @@ module.exports = (upload) => {
   const models = require('../models');
 
   router.get('/create', (req, res) => {
-    if (!req.session.user || !req.session.user.canPost) {
-      return res.redirect('/login');
+    if (!req.session.user) {
+      return res.redirect('/users/login');
+    }
+    if (!req.session.user.canPost) {
+      return res.render('no-perms'); // render noPermission view
     }
     res.render('create'); // render create view
   });
+  
 
   router.get('/', (req, res) => {
     models.Post.findAll({
@@ -25,17 +29,18 @@ module.exports = (upload) => {
         res.render('posts', { posts: posts }); // render posts view
     })
     .catch(err => {
-       res.render('error', { error: err });
+      next(err);
     });
   });
 
-  router.post('/create', upload.single('imageURL'), (req, res) => {
+  router.post('/create', upload.single('imageURL'), (req, res, next) => {
     if (!req.session.user || !req.session.user.canPost) {
-      return res.redirect('/login');
+      return res.redirect('/users/login');
     }
 
     const { title, content } = req.body;
-    const imageURL = req.file ? req.file.filename : null; // if there is a file, set imageURL to the filename, otherwise set to null
+    // if there is a file, set imageURL to the filename, otherwise set to null
+    const imageURL = req.file ? 'assets/images/uploads/' + req.file.filename : null; 
 
     models.Post.create({
       title: title,
@@ -47,9 +52,10 @@ module.exports = (upload) => {
       res.redirect('/posts/' + post.id);
     })
     .catch(err => {
-      res.render('error', { error: err });
-    });
+      next(err);
   });
+});
+
 
   router.post('/:id', (req, res) => {
     const { content } = req.body;
@@ -74,9 +80,11 @@ module.exports = (upload) => {
       }
       res.render('post', { post: post });
     }).catch(err => {
-       res.render('error', { error: err });
+      next(err);
     });
   });
 
   return router;
 };
+// Path: routes/posts.js
+// router file for posts
