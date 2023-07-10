@@ -4,25 +4,16 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 let sequelize;
-if (process.env.CLEARDB_DATABASE_URL) {
-  // if running on Heroku with ClearDB
-  const dbUrlParts = url.parse(process.env.CLEARDB_DATABASE_URL);
-  const [username, password] = dbUrlParts.auth.split(':');
-  
-  sequelize = new Sequelize(dbUrlParts.pathname.substr(1), username, password, {
-    host: dbUrlParts.hostname,
-    dialect: 'mysql',
-  });
+if (process.env.NODE_ENV === 'production') {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  // if running locally
-  sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT,
-  });
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
 
 fs
   .readdirSync(__dirname)
