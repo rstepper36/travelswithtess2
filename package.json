@@ -1,6 +1,9 @@
 {
   "name": "travelswithtess2",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.x",
+    "npm": "8.x"},   
   "description": "New and improved site for Steve and Patty as they go on their adventures",
   "main": "index.js",
   "scripts": {
