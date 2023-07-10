@@ -1,12 +1,14 @@
 require('dotenv').config();
 const url = require('url');
 
+let config;
+
 if (process.env.CLEARDB_DATABASE_URL) {
   // Heroku ClearDB configuration
   const dbUrlParts = url.parse(process.env.CLEARDB_DATABASE_URL);
   const [username, password] = dbUrlParts.auth.split(':');
 
-  module.exports = {
+  config = {
     production: {
       username,
       password,
@@ -17,7 +19,7 @@ if (process.env.CLEARDB_DATABASE_URL) {
   };
 } else {
   // local configuration
-  module.exports = {
+  config = {
     development: {
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
@@ -27,3 +29,7 @@ if (process.env.CLEARDB_DATABASE_URL) {
     },
   };
 }
+
+console.log(config); // log the configuration
+
+module.exports = config;
