@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar navbar-expand-lg m-0 fixed-top">
         <a class="navbar-brand" href="/">
-            <img src="/assets/images/white-logo.png" height="40px" alt="logo">
+            <img src="/assets/images/white-logo.png" height="40px" alt="Travels with Tess Logo" class="img-fluid">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -42,8 +42,12 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4">
             <%- body %>
+        </div>
+        </div>
         <footer class="text-center mb-0 mt-5" >&copy;2023 Nathan Stepper All Rights Reserved</footer>
     </div>
     <!-- include Bootstrap JS -->
