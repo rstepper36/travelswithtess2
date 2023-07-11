@@ -19,6 +19,10 @@ margin-top: 10px;
 color: aliceblue;
 }
 
+.navbar-collapse {
+  z-index: 1000;
+}
+
 .navbar-nav {
 text-align: center;
 margin-top: 10px;
@@ -132,8 +136,10 @@ color: black;
   color: black;
 }
 
-.container {
-  min-height: 80vh;
+.container-fluid   {
+  margin-top: 80px;
+  min-height: 80vh; /* Set a fixed height for the container */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
 }
 
  figure img{
