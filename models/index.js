@@ -36,6 +36,14 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+const bcrypt = require('bcrypt');
+const password = 'Mark1:15';
+
+bcrypt.hash(password, 10, function(err, hash) {
+  console.log(hash);
+});
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
