@@ -10,6 +10,7 @@ const expressLayouts = require('express-ejs-layouts');
 const multer = require('multer');
 const path = require('path');
 const { Image } = require('./models'); // import your Image model
+const PORT = process.env.PORT || 3000;
 
 
 // Create the Express app
@@ -83,9 +84,9 @@ app.post('/upload', upload.single('imageURl'), async (req, res, next) => {
 
 // Sync the database and start listening
 models.sequelize.sync({ alter: true }).then(() => {
-  app.listen(3000, () => {
-    console.log('App listening on port 3000!');
-  });
+  app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
 });
 
 // Path: index.js

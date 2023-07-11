@@ -1,12 +1,16 @@
 {
   "name": "travelswithtess2",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.X",
+    "npm": "9.X"
+  },
   "description": "New and improved site for Steve and Patty as they go on their adventures",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "postinstall": "sequelize db:migrate"
+    "heroku-postbuild": "npx sequelize-cli db:migrate"
   },
   "keywords": [
     "travel",
