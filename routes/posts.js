@@ -33,20 +33,20 @@ module.exports = (upload) => {
     });
   });
 
+  // Route for creating a post and uploading an image
   router.post('/create', upload.single('imageURL'), (req, res, next) => {
     if (!req.session.user || !req.session.user.canPost) {
       return res.redirect('/users/login');
     }
 
     const { title, content } = req.body;
-    // if there is a file, set imageURL to the filename, otherwise set to null
-    const imageURL = req.file ? 'assets/images/uploads/' + req.file.filename : null; 
+    const imageURL = req.file ? req.file.location : null; // here .location will provide you with the URL of the uploaded file
 
     models.Post.create({
       title: title,
       content: content,
       UserId: req.session.user.id,
-      imageURL: imageURL // set imageURL to the filename or null
+      imageURL: imageURL
     })
     .then(post => {
       res.redirect('/posts/' + post.id);
@@ -55,6 +55,7 @@ module.exports = (upload) => {
       next(err);
   });
 });
+
 
 
   router.post('/:id', (req, res) => {

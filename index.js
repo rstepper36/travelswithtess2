@@ -1,37 +1,52 @@
+require('dotenv').config();  // to load environment variables from .env file
 const express = require('express');
 const session = require('express-session');
-const Sequelize = require('sequelize');
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
 const bodyParser = require('body-parser');
 const models = require('./models');
 var usersRouter = require('./routes/users');
 var commentsRouter = require('./routes/comments');
 var indexRouter = require('./routes/index');
 const expressLayouts = require('express-ejs-layouts');
-const multer = require('multer');
 const path = require('path');
 const { Image } = require('./models'); // import your Image model
 const PORT = process.env.PORT || 3000;
+const util = require('util');
 
+aws.config.update({
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  region: process.env.AWS_REGION,
+});
 
 // Create the Express app
 const app = express();
 
-// Configure storage
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, path.join(__dirname, 'public', 'assets', 'images', 'uploads')); 
-  },
-  filename: function(req, file, cb) {
-    let fileName = new Date().toISOString().replace(/:/g, '-') + path.extname(file.originalname);
-    cb(null, fileName);
-  }
+// Set up multer and AWS S3
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
 });
 
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    acl: 'public-read',
+    bucket: process.env.AWS_S3_BUCKET,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString() + '-' + file.originalname)
+    }
+  })
+})
 
 
-const upload = multer({storage: storage});
-
-var postsRouter = require('./routes/posts')(upload); // pass the upload object to the posts router
+var postsRouter = require('./routes/posts')(upload);
 
 // Set up the session
 app.use(session({
@@ -56,6 +71,7 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user;
     next();
   });
+
   
 
 // Include the routes
@@ -71,16 +87,17 @@ app.use(function (err, req, res, next) {
   res.render('error', { message: err.message }); // render your error view with the error object
 });
 
-
-// Route for uploading an image
-app.post('/upload', upload.single('imageURl'), async (req, res, next) => {
+// Set up the upload route
+app.post('/upload', upload.single('imageURL'), async (req, res, next) => {
+  console.log(req.file); // Add this line
   try {
-    const image = await Image.create({ path: req.file.path });
+    const image = await Image.create({ path: req.file.location }); // .location gives you the url of the uploaded file
     res.status(200).json(image);
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 
 // Sync the database and start listening
 models.sequelize.sync({ alter: true }).then(() => {
