@@ -10,7 +10,7 @@
         <p>Posted by <%= post.User.username %></p>
         <p><%= post.content %></p>
         <% if (post.imageURL) { %> <!-- Check if imageURL exists -->
-          <img src="/<%= post.imageURL %>" alt="<%= post.title %>" class="img-fluid custom-border" >
+          <img src="<%= post.imageURL %>" alt="<%= post.title %>" class="img-fluid custom-border" >
         <% } %>
       </fieldset>
     <% }) %>      
