@@ -6,9 +6,9 @@
   <% } else { %>
     <% posts.forEach(post => { %>
       <fieldset>
-        <h1><a href="/posts/<%= post.id %>" data-bs-toggle="tooltip" title="Click on title to add comment" ><%= post.title %></a></h1>
-        <p>Posted by <%= post.User.username %></p>
-        <p><%= post.content %></p>
+        <h2><a href="/posts/<%= post.id %>" data-bs-toggle="tooltip" title="Click on title to add comment" ><%= post.title %></a></h2>
+        <h2>Posted by <%= post.User.username %></h2>
+        <h2><%= post.content %></h2>
         <% if (post.imageURL) { %> <!-- Check if imageURL exists -->
           <img src="<%= post.imageURL %>" alt="<%= post.title %>" class="img-fluid custom-border" >
         <% } %>

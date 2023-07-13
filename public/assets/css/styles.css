@@ -78,6 +78,10 @@ h3 {
   padding: 0.1em; 
 }
 
+h2 a {
+  color: #fff;
+  text-decoration: none;
+}
 
 header {
   background-color: #4f58fd;
