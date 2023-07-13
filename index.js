@@ -45,7 +45,6 @@ const upload = multer({
   })
 })
 
-
 var postsRouter = require('./routes/posts')(upload);
 
 // Set up the session
@@ -72,8 +71,7 @@ app.use((req, res, next) => {
     next();
   });
 
-  
-
+ 
 // Include the routes
 app.use('/users', usersRouter); // instead of app.use('/users', usersRouter);
 app.use('/posts', postsRouter); // instead of app.use('/posts', postsRoutes);

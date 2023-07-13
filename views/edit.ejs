@@ -1,0 +1,25 @@
+<% title = 'Travels with Tess - Edit Post' %>
+<div class="container">
+  <h1>Edit Post</h1>
+  <% if (typeof error !== 'undefined') { %>
+    <div class="alert alert-danger">
+      <%= error %>
+    </div>
+  <% } %>
+  <form action="/posts/<%= post._id %>?_method=PUT" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control mb-3 Textbox" id="title" name="title" value="<%= post.title %>" required>
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea class="form-control mb-3 Textbox" id="content" name="content" rows="3" required><%= post.content %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input type="file" class="form-control-file mb-3 Textbox" id="image" name="imageURL">
+      <!-- Consider showing a preview of the current image here, with a note that it will be replaced if a new file is uploaded. -->
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">Update</button>
+  </form>
+</div>

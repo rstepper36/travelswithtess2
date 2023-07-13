@@ -85,6 +85,57 @@ module.exports = (upload) => {
     });
   });
 
+    // Route for showing the edit form
+    router.get('/:id/edit', (req, res, next) => {
+      if (!req.session.user) {
+        return res.redirect('/users/login');
+      }
+      models.Post.findByPk(req.params.id)
+        .then(post => {
+          if (!post) {
+            return res.status(404).send('Post not found');
+          }
+          if (req.session.user.id !== post.UserId) {
+            return res.status(403).send('You do not have permission to edit this post');
+          }
+          res.render('edit', { post: post });
+        })
+        .catch(err => {
+          next(err);
+        });
+    });
+  
+    // Route for updating a post
+    router.put('/:id', upload.single('imageURL'), (req, res, next) => {
+      if (!req.session.user) {
+        return res.redirect('/users/login');
+      }
+      const { title, content } = req.body;
+      const imageURL = req.file ? req.file.location : null;
+  
+      models.Post.findByPk(req.params.id)
+        .then(post => {
+          if (!post) {
+            return res.status(404).send('Post not found');
+          }
+          if (req.session.user.id !== post.UserId) {
+            return res.status(403).send('You do not have permission to edit this post');
+          }
+          return post.update({
+            title: title,
+            content: content,
+            imageURL: imageURL || post.imageURL // Keep the old image if a new one was not uploaded
+          });
+        })
+        .then(post => {
+          res.redirect('/posts/' + post.id);
+        })
+        .catch(err => {
+          next(err);
+        });
+    });
+  
+
   return router;
 };
 // Path: routes/posts.js
