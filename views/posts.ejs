@@ -1,6 +1,6 @@
-<% title = 'Travels with Tess' %>
+<% title = 'All Posts' %>
 <div class="container">
-    <h5 class="mt-3">Please click on the title to add comments to any post</h5>
+  <h4 class="mt-3">Please click on the title to add comments to any post</h4>
   <% if (typeof message !== 'undefined') { %>
     <h2><%= message %></h2>
   <% } else { %>
@@ -12,7 +12,11 @@
         <% if (post.imageURL) { %> <!-- Check if imageURL exists -->
           <img src="<%= post.imageURL %>" alt="<%= post.title %>" class="img-fluid custom-border" >
         <% } %>
+        <% if (user && user.id === post.UserId) { %> <!-- Check if the logged-in user is the author -->
+          <a href="/posts/<%= post.id %>/edit" class="btn btn-primary mt-2">Edit</a>
+        <% } %>      
       </fieldset>
-    <% }) %>      
+    <% }) %>
   <% } %>
 </div>
+
