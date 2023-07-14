@@ -14,6 +14,7 @@ const path = require('path');
 const { Image } = require('./models'); // import your Image model
 const PORT = process.env.PORT || 3000;
 const util = require('util');
+const methodOverride = require('method-override');
 
 aws.config.update({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -71,12 +72,18 @@ app.use((req, res, next) => {
     next();
   });
 
+  // Set up method-override
+app.use(methodOverride('_method'));
+
  
 // Include the routes
 app.use('/users', usersRouter); // instead of app.use('/users', usersRouter);
 app.use('/posts', postsRouter); // instead of app.use('/posts', postsRoutes);
 app.use('/comments', commentsRouter); // instead of app.use('/comments', commentsRoutes);
 app.use('/', indexRouter); // instead of app.use('/', indexRoutes);
+
+
+
 
 // Error handling middleware
 app.use(function (err, req, res, next) {
