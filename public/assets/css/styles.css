@@ -252,7 +252,9 @@ text-shadow: -1px 2px 6px rgba(0, 0, 0, 0.5);
   main {
     padding: 10px;
   }
-
+  .nav-link {
+    color: #fff  /* Replace #YourDesiredColorHere with the color you want */
+  }
   footer {
     font-size: 14px;
     padding: 10px;
