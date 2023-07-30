@@ -7,10 +7,19 @@
     <% posts.forEach(post => { %>
       <fieldset>
         <h2><a href="/posts/<%= post.id %>" data-bs-toggle="tooltip" title="Click on title to add comment" ><%= post.title %></a></h2>
-        <h2><%= post.content %></h2>
-        <% if (post.imageURL) { %> <!-- Check if imageURL exists -->
-          <img src="<%= post.imageURL %>" alt="<%= post.title %>" class="img-fluid custom-border" >
+        <p><%= post.content %></p>
+
+        <!-- Loop through and display all associated images for the post -->
+        <% if (post.Images && post.Images.length > 0) { %>
+          <div class="post-images">
+            <% post.Images.forEach(image => { %>
+              <img src="<%= image.imageUrl %>" alt="Image for post <%= post.title %>" class="img-fluid custom-border">
+            <% }); %>
+          </div>
+        <% } else { %>
+          <p>No images for this post.</p>
         <% } %>
+
         <% if (user && user.id === post.UserId) { %> <!-- Check if the logged-in user is the author -->
           <a href="/posts/<%= post.id %>/edit" class="btn btn-primary mt-2">Edit</a>
         <% } %>      
@@ -18,4 +27,3 @@
     <% }) %>
   <% } %>
 </div>
-
