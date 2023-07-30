@@ -21,6 +21,7 @@ color: aliceblue;
 
 .navbar-collapse {
   z-index: 1000;
+  
 }
 
 .navbar-nav {
@@ -215,14 +216,45 @@ text-shadow: -1px 2px 6px rgba(0, 0, 0, 0.5);
 /* Responsive styles */
 @media (max-width: 768px) {
   header {
-    font-size: 24px;
-    padding: 10px;
+    color: #fff;
   }
+
+  .navbar-collapse {
+    position: absolute;  /* Using absolute instead of fixed to adjust based on its relative parent */
+    top: 0px;  /* Adjust this value to move it up or down */
+    right: 0;
+    width: 100%;  /* Adjust if you want a different width */
+    background-color: whitesmoke;  /* Light background */
+    z-index: 1050;  /* Ensure it's on top of other content */
+    overflow-y: auto;  /* In case of longer menus */
+}
+}
+    
+    .nav-link {
+      color: black;
+    }
+    
+    .nav-link:hover {
+      color: black;
+      margin-bottom: 20px;
+    }
+    
+    .nav-link:active {
+      color: black;
+      margin-bottom: 20px;
+    }
+    
+    .nav-link:visited {
+      color: black;
+      margin-bottom: 20px;
+    }
 
   main {
     padding: 10px;
   }
-
+  .nav-link {
+    color: #fff  /* Replace #YourDesiredColorHere with the color you want */
+  }
   footer {
     font-size: 14px;
     padding: 10px;
