@@ -21,7 +21,12 @@ module.exports = (upload) => {
         include: [{
             model: models.Comment,
             include: [models.User]
-        }, models.User]
+        }, 
+        models.User,
+        {
+            model: models.Image, // Include associated Images
+            as: 'Images' // This name should be consistent with how you named the association in your model
+        }]
     })
     .then(posts => {
         if (posts.length === 0) {
@@ -33,6 +38,7 @@ module.exports = (upload) => {
       next(err);
     });
 });
+
 
 
   // Route for creating a post and uploading an image
@@ -70,12 +76,18 @@ router.post('/:id', (req, res) => {
   });
 });
 
+// Route for showing a single post
 router.get('/:id', (req, res) => {
   models.Post.findByPk(req.params.id, {
     include: [{
       model: models.Comment,
       include: [models.User]
-    }, models.User]
+    }, 
+    models.User,
+    {
+      model: models.Image, // Include associated Images
+      as: 'Images' 
+    }]
   }).then(post => {
     if (!post) {
       return res.status(404).send('Post not found');
@@ -85,6 +97,8 @@ router.get('/:id', (req, res) => {
     next(err);
   });
 });
+
+
 
 // Route for showing the edit form
 router.get('/:id/edit', (req, res, next) => {
