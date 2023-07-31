@@ -23,10 +23,7 @@ module.exports = (upload) => {
             include: [models.User]
         }, 
         models.User,
-        {
-            model: models.Image, // Include associated Images
-            as: 'Images' // This name should be consistent with how you named the association in your model
-        }]
+        ]
     })
     .then(posts => {
         if (posts.length === 0) {
@@ -83,11 +80,7 @@ router.get('/:id', (req, res, next) => {
       model: models.Comment,
       include: [models.User]
     }, 
-    models.User,
-    {
-      model: models.Image, // Include associated Images
-      as: 'Images' 
-    }]
+    models.User]
   }).then(post => {
     if (!post) {
       return res.status(404).send('Post not found');
