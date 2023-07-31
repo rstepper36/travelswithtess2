@@ -16,7 +16,7 @@ module.exports = (upload) => {
   
 
   // Route for showing all posts
-  router.get('/', (req, res) => {
+  router.get('/', (req, res, next) => {
     models.Post.findAll({
         include: [{
             model: models.Comment,
@@ -77,7 +77,7 @@ router.post('/:id', (req, res) => {
 });
 
 // Route for showing a single post
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   models.Post.findByPk(req.params.id, {
     include: [{
       model: models.Comment,
