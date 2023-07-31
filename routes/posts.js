@@ -98,8 +98,6 @@ router.get('/:id', (req, res) => {
   });
 });
 
-
-
 // Route for showing the edit form
 router.get('/:id/edit', (req, res, next) => {
   if (!req.session.user) {
